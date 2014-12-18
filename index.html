@@ -1,10 +1,284 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Refresh" content="0;url=http://rawgit.com/ambaca/rate-calculator-2015/gh-pages/rate.html">
+<html><!--
+
+- Updated 17.12.2014
+
+--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style>
+body {
+	font-size: 24px;
+	background-color: #8C8C8C;
+}
+
+#background_net_graph {
+	//margin-left: auto;
+	//margin-right: auto;
+	width: 683px;
+	height: 480px;
+	background-image: url(background.png);
+}
+#wrapper_input_packetsize {
+	position: relative;
+	top: 374px;
+	left: 178px;
+}
+#wrapper_input_updaterate {
+	position: relative;
+	top: 374px;
+	left: 590px;
+}
+#wrapper_output_kilobytes {
+	position: relative;
+	top: 374px;
+	left: 254px;
+}
+#input_packetsize {
+	position:absolute;
+	width:60px;
+	text-align: right;
+	font-size: 20px;
+	font-family: courier;
+}
+#input_updaterate {
+	position:absolute;
+	width:60px;
+	text-align: right;
+	font-size: 20px;
+	font-family: courier;
+}
+#output_kilobytes {
+	position:absolute;
+	width:120px;
+	text-align: right;
+	font-size: 20px;
+	background-image: url(background.png);
+	color: white;
+	font-family: courier;
+}
+#input_maxplayers {
+	width:60px;
+	text-align: right;
+	font-size: 20px;
+	font-family: courier;
+}
+#input_upload {
+	//width:20%;
+	text-align: right;
+	font-size: 20px;
+	font-family: courier;
+}
+#input_measure {
+	//width:20%;
+	text-align: left;
+	font-size: 20px;
+	font-family: courier;
+}
+#button {
+	font-size: 20px;
+	font-family: courier;
+}
+#result {
+	display:none;
+	white-space: pre;
+	font-size: 18px;
+	font-family: courier;
+}
+#graph {
+	display:none;
+    position: absolute;
+    left: -697;
+    top: -295px;
+    z-index: 1;
+}
+
+#center {
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	white-space: nowrap;
+}
+
+#inputs {
+	white-space: pre;
+}
+
+h3 {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	margin-right: 150px;
+	margin-left: 50px;
+	white-space: nowrap;
+}
+
+</style>
 </head>
 
-<body>
-</body>
+<body onload="myFunctionPageLoad()">
 
-</html>
+<font size="2px">Hard refresh this web page, use CTRL + F5</font>
+<h3>Source Dedicated Server Rate Calculator 2015</h3>
+
+<div id="center">
+<div id="inputs">
+-maxplayers				<input min="1" max="999" id="input_maxplayers" value="32" type="number">
+Server Upload Bandwidth	<input size="6" id="input_upload" value="13.5" title="Use DOT !!" type="text"> <select id="input_measure" onchange="myFunctionOptionsUpdate()">undefined<option selected="selected">Mbps</option><option>MB/s</option><option>Kbps</option><option>KB/s</option></select> <span id="input_measure_definition">Mega bits per second</span>
+<button id="button" onclick="myFunctionCalculate()"> calculate </button>
+</div>
+	<div id="background_net_graph">
+		<div id="wrapper_input_packetsize">
+			<img id="graph" src="rate_tiedostot/packet%2520size.png">
+			<input id="input_packetsize" value="800" min="1" max="9999" title="Packet size" onmouseover="ImgOn()" onmouseout="ImgOff()" type="number">
+		</div>
+		<div id="wrapper_input_updaterate">
+			<input id="input_updaterate" value="66" min="20" max="9999" title="Max. updaterate" type="number">
+		</div>
+		<div id="wrapper_output_kilobytes">
+			<input id="output_kilobytes" value="k/s" title="Kilo Bytes per sec" type="text">
+		</div>
+	</div>
+<div id="inputs">You can host <span id="output_maxplayers_recommended"></span> players
+* Recommended Upload Bandwidth for <span id="output_maxplayers"></span> players = <span id="output_upload_recommended"></span></div>
+<span id="result">
+sv_maxrate		"0" <font color="#00FF00">// Set this same as min. rate if you not have enough upload bandwidth</font>
+sv_minrate		"<span id="output_minrate"></span>"
+sv_maxupdaterate	"<span id="output_maxupdaterate"></span>"
+sv_minupdaterate	"20"
+<font color="#00FF00">//sv_maxcmdrate		"66" // Use if you like</font>
+sv_mincmdrate		"30"
+net_splitpacket_maxrate			"1048576"
+<font color="#00FF00">//sv_competitive_minspec			"1"
+//sv_use_steam_voice				"0"
+
+// in CS:GO, maxcmd and maxupdaterate cvars are hidden and follow server tickrate automatically</font>
+
+</span>
+</div>
+
+
+
+<script>
+
+function ImgOn() {
+    document.getElementById("graph").style.display = "block";
+	
+}
+
+function ImgOff() {
+    document.getElementById("graph").style.display = "none";
+	
+}
+
+	/* cookie */
+function setCookie(cname, cvalue, exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	var expires = "expires="+d.toUTCString();
+	document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+	/* cookie */
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1);
+		if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+	}
+	return "";
+}
+
+	/* <option> units */
+var units = ["Mbps", "MB/s", "Kbps", "KB/s"];
+var units_definition = ["Mega bits per second", "Mega Bytes per second", "Kilo bits per second", "Kilo Bytes per second"];
+
+	/* Page load */
+function myFunctionPageLoad() {
+
+	var index;
+	var text;
+
+	for (index = 0; index < units.length; index++) {
+		text += "<option>" + units[index] + "</option>";
+	}
+	document.getElementById("input_measure").innerHTML = text;
+	document.getElementById("input_measure_definition").innerHTML = units_definition[0];
+
+	/* cookie */
+	var item=getCookie("SelectedItem");
+	if (item != "")
+	{
+		document.getElementById("input_measure").selectedIndex = item;
+		document.getElementById("input_measure_definition").innerHTML = units_definition[item];;
+	}
+
+}
+
+function myFunctionOptionsUpdate() {
+
+	var index = document.getElementById("input_measure").selectedIndex;
+	document.getElementById("input_measure_definition").innerHTML = units_definition[index];
+
+	/* cookie */
+	setCookie("SelectedItem", index, 30);
+}
+
+
+function myFunctionCalculate() {
+	document.getElementById('result').style.display = 'block';
+
+	var maxplayers = document.getElementById("input_maxplayers").value;
+	var upload = document.getElementById("input_upload").value;
+	var unit_index = document.getElementById("input_measure").selectedIndex;
+	var packetsize = document.getElementById("input_packetsize").value;
+	var updaterate = document.getElementById("input_updaterate").value;
+
+	var rate = packetsize * updaterate;
+
+	var kilobytes = document.getElementById("output_kilobytes");
+	kilobytes.value = parseFloat(rate / 1000).toFixed(2)+' k/s'
+
+	var upload_recommended = rate * maxplayers;
+	var maxplayers_recommended = upload;
+
+	switch (unit_index) {
+		case 0: // Mega bits per second
+			upload_recommended /= 1000000;
+			upload_recommended *= 8;
+
+			maxplayers_recommended *= 1000000 / 8; // Upload Mbps to B/s
+			break;
+
+		case 1: // Mega Bytes per second
+			upload_recommended /= 1000000;
+
+			maxplayers_recommended *= 1000000; // Upload MB/s to B/s
+			break;
+
+		case 2: // Kilo bits per second
+			upload_recommended /= 1000;
+			upload_recommended *= 8;
+
+			maxplayers_recommended *= 1000 / 8; // Upload Kbps to B/s
+			break;
+
+		case 3: // Kilo Bytes per second
+			upload_recommended /= 1000;
+
+			maxplayers_recommended *= 1000; // Upload KB/s to B/s
+			break;
+	}
+
+	upload_recommended = upload_recommended.toFixed(2)+" "+units[unit_index];
+	maxplayers_recommended /= rate; // Divide upload with rate
+
+	document.getElementById("output_minrate").innerHTML = rate;
+	document.getElementById("output_maxupdaterate").innerHTML = updaterate;
+	document.getElementById("output_maxplayers").innerHTML = maxplayers;
+	document.getElementById("output_upload_recommended").innerHTML = upload_recommended;
+	document.getElementById("output_maxplayers_recommended").innerHTML = parseFloat(maxplayers_recommended).toFixed(0);
+}
+</script>
+
+
+</body></html>
