@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html><!--
+<html>
+<!--
 
 - Updated 17.12.2014
 
---><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+-->
+<head>
 <style>
 body {
 	font-size: 24px;
@@ -121,20 +122,21 @@ h3 {
 
 <div id="center">
 <div id="inputs">
--maxplayers				<input min="1" max="999" id="input_maxplayers" value="32" type="number">
-Server Upload Bandwidth	<input size="6" id="input_upload" value="13.5" title="Use DOT !!" type="text"> <select id="input_measure" onchange="myFunctionOptionsUpdate()">undefined<option selected="selected">Mbps</option><option>MB/s</option><option>Kbps</option><option>KB/s</option></select> <span id="input_measure_definition">Mega bits per second</span>
+-maxplayers				<input type="number" min="1" max="65" id="input_maxplayers" value="32" oninput="myFunctionUpdateCheck(this)">
+Server Upload Bandwidth	<input type="text" size="6" id="input_upload" value="13.5" title="Use DOT !!"> <select id="input_measure" onchange="myFunctionOptionsUpdate()">
+<option>ERROR!</option></select> <span id="input_measure_definition">ERROR!</span>
 <button id="button" onclick="myFunctionCalculate()"> calculate </button>
 </div>
 	<div id="background_net_graph">
 		<div id="wrapper_input_packetsize">
 			<img id="graph" src="packetsize.png">
-			<input id="input_packetsize" value="800" min="1" max="9999" title="Packet size" onmouseover="ImgOn()" onmouseout="ImgOff()" type="number">
+			<input type="number" id="input_packetsize" value="800" min="1" max="9999" title="Packet size" onmouseover="ImgOn()" onmouseout="ImgOff()">
 		</div>
 		<div id="wrapper_input_updaterate">
-			<input id="input_updaterate" value="66" min="20" max="9999" title="Max. updaterate" type="number" oninput="myFunctionCalculate()">
+			<input type="number" id="input_updaterate" value="66" min="20" max="128" title="Max. updaterate" oninput="myFunctionUpdateCheck(this)">
 		</div>
 		<div id="wrapper_output_kilobytes">
-			<input id="output_kilobytes" value="k/s" title="Kilo Bytes per sec" type="text">
+			<input type="text" id="output_kilobytes" value="k/s" title="Kilo Bytes per sec">
 		</div>
 	</div>
 <div id="inputs">You can host <span id="output_maxplayers_recommended"></span> players
@@ -224,6 +226,15 @@ function myFunctionOptionsUpdate() {
 }
 
 
+function myFunctionUpdateCheck(x) {
+
+	if( parseInt(x.min) <= x.value && x.value <= parseInt(x.max) )
+	{
+		myFunctionCalculate();
+	}
+}
+
+
 function myFunctionCalculate() {
 	document.getElementById('result').style.display = 'block';
 
@@ -280,5 +291,5 @@ function myFunctionCalculate() {
 }
 </script>
 
-
-</body></html>
+</body>
+</html>
