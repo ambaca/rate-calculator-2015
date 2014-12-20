@@ -33,7 +33,6 @@ div#header p {
 	font-size: 20px;
 	left: 20px;
 }
-
 div#center2 {
 	margin: 0px 0px 80px 50px;
 }
@@ -118,7 +117,7 @@ input#input_updaterate {
 </head>
 
 <body onload="PageOnLoad()">
-<div id="header"><p>Source Dedicated Server Rate Calculator 2015</p></div>
+<div id="header"><p>Source Dedicated Server Rate Calculator 2015</p>v1.1</div>
 
 	<div id="center2">
 	<div id="settings">
@@ -309,6 +308,9 @@ function myFunctionCalculate() {
 
 		case 2: // Kilo bits per second
 			upload_recommended /= 1000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended).toFixed(0)+" KB/s\n"+(upload_recommended/1000.0).toFixed(2)+" MB/s";
+
 			upload_recommended *= 8.0;
 
 			maxplayers_recommended *= 1000.0 / 8.0; // Upload Kbps to B/s
@@ -317,6 +319,8 @@ function myFunctionCalculate() {
 
 		case 3: // Kilo Bytes per second
 			upload_recommended /= 1000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended*8.0).toFixed(0)+" Kbps\n"+(upload_recommended*8.0/1000.0).toFixed(2)+" Mbps";
 
 			maxplayers_recommended *= 1000.0; // Upload KB/s to B/s
 			upload_title = "equally\n"+(upload_title * 8.0).toFixed(0)+" Kbps\n"+((upload_title * 8.0)/1000).toFixed(2)+" Mbps";
