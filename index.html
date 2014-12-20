@@ -8,143 +8,142 @@
 <head>
 <style>
 body {
-	font-size: 24px;
-	background-color: #8C8C8C;
+	font-family: Arial;
+	font-size: 0.8em;
+	color: grey;
+	background: -webkit-linear-gradient(#3A3837, #000000); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#3A3837, #000000); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#3A3837, #000000); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#3A3837, #000000); /* Standard syntax */
+	margin: 1px 1px 1px 1px;
+}
+div#header {
+	background-repeat: repeat-x;
+	height: 60px;
+	background-image: url(globalheader_bg.jpg);
+
+}
+div#header p {
+    position: absolute;
+	color: grey;
+	text-shadow: 1px 2px 0px black;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+	font-size: 20px;
+	left: 20px;
 }
 
-#background_net_graph {
-	//margin-left: auto;
-	//margin-right: auto;
-	width: 683px;
-	height: 480px;
-	background-image: url(background.png);
+div#center2 {
+	margin: 0px 0px 80px 50px;
 }
-#wrapper_input_packetsize {
-	position: relative;
-	top: 374px;
-	left: 178px;
-}
-#wrapper_input_updaterate {
-	position: relative;
-	top: 374px;
-	left: 590px;
-}
-#wrapper_output_kilobytes {
-	position: relative;
-	top: 374px;
-	left: 254px;
-}
-#input_packetsize {
-	position:absolute;
-	width:60px;
+input,select {
+	width: 70px;
 	text-align: right;
-	font-size: 20px;
-	font-family: courier;
-}
-#input_updaterate {
-	position:absolute;
-	width:60px;
-	text-align: right;
-	font-size: 20px;
-	font-family: courier;
-}
-#output_kilobytes {
-	position:absolute;
-	width:120px;
-	text-align: right;
-	font-size: 20px;
-	background-image: url(background.png);
-	color: white;
-	font-family: courier;
-}
-#input_maxplayers {
-	width:60px;
-	text-align: right;
-	font-size: 20px;
-	font-family: courier;
-}
-#input_upload {
-	//width:20%;
-	text-align: right;
-	font-size: 20px;
-	font-family: courier;
-}
-#input_measure {
-	//width:20%;
-	text-align: left;
-	font-size: 20px;
-	font-family: courier;
-}
-#button {
-	font-size: 20px;
-	font-family: courier;
-}
-#result {
-	display:none;
-	white-space: pre;
+	font-family: Verdana;
 	font-size: 18px;
-	font-family: courier;
+	margin: 0px;
+	border-style: none;
+	padding: 1px;
 }
-#graph {
+div#settings {
+    display: block;
+    //font-family: monospace;
+    white-space: pre;
+    //margin: 1em 0;
+}
+div#center {
+	visibility: hidden;
+    display: block;
+    //font-family: monospace;
+    white-space: pre;
+    //margin: 1em 0;
+}
+input#input_upload {
+	margin-left: right;
+}
+
+input#input_maxplayers {
+}
+
+div#net_graph {
+	position: relative;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-image: url(background1.png);
+	background-origin: content-box;
+	width: 683px; height: 480px;
+}
+
+input#input_packetsize {
+    position: absolute;
+    top: 378px;
+    left: 175px;
+}
+
+input#output_kilobytes {
+    position: absolute;
+    top: 378px;
+    left: 260px;
+	background-image: url(background1.png);
+	background-position: 30% 20%;
+	color: white;
+	text-shadow: 1px 2px 0px black;
+}
+
+input#output_lerp {
+    position: absolute;
+    top: 378px;
+    left: 460px;
+	background-image: url(background1.png);
+	background-position: 30% 20%; 
+	color: white;
+	text-shadow: 1px 2px 0px black;
+}
+
+input#input_updaterate {
+    position: absolute;
+    top: 378px;
+    left: 590px;
+}
+
+#popup {
 	display:none;
     position: absolute;
-    left: -697;
-    top: -295px;
-    z-index: 1;
-}
-
-#center {
-	margin-left: auto;
-	margin-right: auto;
-	width: 70%;
-	white-space: nowrap;
-}
-
-#inputs {
-	white-space: pre;
-}
-
-h3 {
-	margin-top: 10px;
-	margin-bottom: 20px;
-	margin-right: 150px;
-	margin-left: 50px;
-	white-space: nowrap;
+    top: 50px;
+	border: 5px solid red;
 }
 
 </style>
 </head>
 
-<body onload="myFunctionPageLoad()">
+<body onload="PageOnLoad()">
+<div id="header"><p>Source Dedicated Server Rate Calculator 2015</p></div>
 
-<font size="2px">Hard refresh this web page, use CTRL + F5</font>
-<h3>Source Dedicated Server Rate Calculator 2015</h3>
+	<div id="center2">
+	<div id="settings">
+server upload bandwidth	<input type="text" id="input_upload" value="10" title="Please use calculate and look again." oninput="UpdatedCheck()" > <select id="input_unit" onchange="UpdateUnitDefinition(this)">
+		<option>error!</option>
+	</select> <span id="output_unit_definition">error!</span>
+-maxplayers			<input type="number" id="input_maxplayers" min="1" max="65" value="32" title="min. 1 max. 65" oninput="UpdatedCheck()" >
+<button id="button" onclick="UpdatedCheck()"> calculate </button></div>
+
+	<div id="net_graph">
+		<img id="popup" src="packetsize.png" >
+		<input type="number" id="input_packetsize" min="1" max="9999" value="800" oninput="UpdatedCheck()" onmouseover="ImgOn()" onmouseout="ImgOff()" title="Packet size in bytes">
+		<input type="text" id="output_kilobytes" readonly title="Kilo Bytes per second">
+		<input type="text" id="output_lerp" readonly title="Please use calculate and look again.">
+		<input type="number" id="input_updaterate" min="20" max="128" value="66" title="updaterate min. 20 max. 128" oninput="UpdatedCheck()" >
+	</div>
 
 <div id="center">
-<div id="inputs">
--maxplayers				<input type="number" min="1" max="65" id="input_maxplayers" value="32" oninput="myFunctionUpdateCheck(this)">
-Server Upload Bandwidth	<input type="text" size="6" id="input_upload" value="13.5" title="Use DOT !!"> <select id="input_measure" onchange="myFunctionOptionsUpdate()">
-<option>ERROR!</option></select> <span id="input_measure_definition">ERROR!</span>
-<button id="button" onclick="myFunctionCalculate()"> calculate </button>
-</div>
-	<div id="background_net_graph">
-		<div id="wrapper_input_packetsize">
-			<img id="graph" src="packetsize.png">
-			<input type="number" id="input_packetsize" value="800" min="1" max="9999" title="Packet size" onmouseover="ImgOn()" onmouseout="ImgOff()">
-		</div>
-		<div id="wrapper_input_updaterate">
-			<input type="number" id="input_updaterate" value="66" min="20" max="128" title="Max. updaterate" oninput="myFunctionUpdateCheck(this)">
-		</div>
-		<div id="wrapper_output_kilobytes">
-			<input type="text" id="output_kilobytes" value="k/s" title="Kilo Bytes per sec">
-		</div>
-	</div>
-<div id="inputs">You can host <span id="output_maxplayers_recommended"></span> players
-* Recommended Upload Bandwidth for <span id="output_maxplayers"></span> players = <span id="output_upload_recommended"></span></div>
-<span id="result">
+You can host <span id="output_maxplayers_recommended">0</span> players
+* Recommended Upload Bandwidth for <span id="output_maxplayers">0</span> players = <span id="output_upload_recommended">0</span>
+
+
 sv_maxrate		"0" <font color="#00FF00">// Set this same as min. rate if you not have enough upload bandwidth</font>
 sv_minrate		"<span id="output_minrate"></span>"
-sv_maxupdaterate	"<span id="output_maxupdaterate"></span>"
+sv_maxupdaterate	"<span id="output_maxupdaterate"></span>" <!-- It's capped "1048576" -->
 sv_minupdaterate	"20"
 <font color="#00FF00">//sv_maxcmdrate		"66" // Use if you like</font>
 sv_mincmdrate		"30"
@@ -154,22 +153,26 @@ net_splitpacket_maxrate			"1048576"
 
 // in CS:GO, maxcmd and maxupdaterate cvars are hidden and follow server tickrate automatically</font>
 
-</span>
+
+<a href="https://developer.valvesoftware.com/wiki/TF2_Network_Graph">https://developer.valvesoftware.com/wiki/TF2_Network_Graph</a>
 </div>
-
-
+</div>
 
 <script>
 
 function ImgOn() {
-    document.getElementById("graph").style.display = "block";
+    document.getElementById("popup").style.display = "block";
 	
 }
 
 function ImgOff() {
-    document.getElementById("graph").style.display = "none";
+    document.getElementById("popup").style.display = "none";
 	
 }
+
+	/* <option> units */
+var units = ["Mbps", "MB/s", "Kbps", "KB/s"];
+var units_definitions = ["Mega bits per second", "Mega Bytes per second", "Kilo bits per second", "Kilo Bytes per second"];
 
 	/* cookie */
 function setCookie(cname, cvalue, exdays) {
@@ -190,12 +193,9 @@ function getCookie(cname) {
 	return "";
 }
 
-	/* <option> units */
-var units = ["Mbps", "MB/s", "Kbps", "KB/s"];
-var units_definition = ["Mega bits per second", "Mega Bytes per second", "Kilo bits per second", "Kilo Bytes per second"];
 
 	/* Page load */
-function myFunctionPageLoad() {
+function PageOnLoad() {
 
 	var index;
 	var text;
@@ -203,90 +203,140 @@ function myFunctionPageLoad() {
 	for (index = 0; index < units.length; index++) {
 		text += "<option>" + units[index] + "</option>";
 	}
-	document.getElementById("input_measure").innerHTML = text;
-	document.getElementById("input_measure_definition").innerHTML = units_definition[0];
+	document.getElementById("input_unit").innerHTML = text;
+	document.getElementById("output_unit_definition").innerHTML = units_definitions[0];
 
 	/* cookie */
-	var item=getCookie("SelectedItem");
+	var item=getCookie("SelectedItemUnit");
 	if (item != "")
 	{
-		document.getElementById("input_measure").selectedIndex = item;
-		document.getElementById("input_measure_definition").innerHTML = units_definition[item];;
+		document.getElementById("input_unit").selectedIndex = item;
+		document.getElementById("output_unit_definition").innerHTML = units_definitions[item];;
 	}
-
 }
-
-function myFunctionOptionsUpdate() {
-
-	var index = document.getElementById("input_measure").selectedIndex;
-	document.getElementById("input_measure_definition").innerHTML = units_definition[index];
-
+	/* Select unit */
+function UpdateUnitDefinition(element)
+{
+	document.getElementById("output_unit_definition").innerHTML = units_definitions[element.selectedIndex];
 	/* cookie */
-	setCookie("SelectedItem", index, 30);
+	setCookie("SelectedItemUnit", element.selectedIndex, 30);
+
+	UpdatedCheck();
 }
 
+function UpdatedCheck() {
+	document.getElementById('center').style.visibility = 'hidden';
 
-function myFunctionUpdateCheck(x) {
+	var x = document.getElementById("input_packetsize");
 
-	if( parseInt(x.min) <= x.value && x.value <= parseInt(x.max) )
+	if( !(parseInt(x.min) <= x.value && x.value <= parseInt(x.max)) )
 	{
-		myFunctionCalculate();
+		return;
 	}
-}
 
+	x = document.getElementById("input_updaterate");
+
+	if( !(parseInt(x.min) <= x.value && x.value <= parseInt(x.max)) )
+	{
+		return;
+	}
+
+	x = document.getElementById("input_maxplayers");
+
+	if( !(parseInt(x.min) <= x.value && x.value <= parseInt(x.max)) )
+	{
+		return;
+	}
+
+	x = parseFloat(document.getElementById("input_upload").value);
+
+	if( isNaN(x) || x < 0.0 )
+	{
+		return;
+	}
+
+	myFunctionCalculate();
+}
 
 function myFunctionCalculate() {
-	document.getElementById('result').style.display = 'block';
+	document.getElementById('center').style.visibility = 'visible';
 
+	//var audio = new Audio('blip.wav');
+	//audio.volume=0.01;
+	//audio.play();
+
+	var elemt_upload = document.getElementById("input_upload");
 	var maxplayers = document.getElementById("input_maxplayers").value;
-	var upload = document.getElementById("input_upload").value;
-	var unit_index = document.getElementById("input_measure").selectedIndex;
+	var unit_index = document.getElementById("input_unit").selectedIndex;
 	var packetsize = document.getElementById("input_packetsize").value;
 	var updaterate = document.getElementById("input_updaterate").value;
 
 	var rate = packetsize * updaterate;
 
-	var kilobytes = document.getElementById("output_kilobytes");
-	kilobytes.value = parseFloat(rate / 1000).toFixed(2)+' k/s'
+	document.getElementById("output_kilobytes").value = (rate / 1000).toFixed(2);
+
+	var elemt_lerp = document.getElementById("output_lerp");
+	var lerp = ((1/updaterate) * 2);	//cl_interp_ratio 2 by default
+
+	elemt_lerp.title = "For players\ncl_interp_ratio 2; cl_interp "+lerp.toFixed(6);
+	elemt_lerp.value = (lerp * 1000.0).toFixed(1);
 
 	var upload_recommended = rate * maxplayers;
-	var maxplayers_recommended = upload;
+	var upload_recommended_title;
+	var maxplayers_recommended = parseFloat(elemt_upload.value);
+	var upload_title = maxplayers_recommended;
 
 	switch (unit_index) {
 		case 0: // Mega bits per second
-			upload_recommended /= 1000000;
-			upload_recommended *= 8;
+			upload_recommended /= 1000000.0;
 
-			maxplayers_recommended *= 1000000 / 8; // Upload Mbps to B/s
+			upload_recommended_title = "equally\n"+(upload_recommended).toFixed(2)+" MB/s\n"+(upload_recommended*1000).toFixed(0)+" KB/s";
+
+			upload_recommended *= 8.0;
+
+			maxplayers_recommended *= 1000000.0 / 8.0; // Upload Mbps to B/s
+			upload_title = "equally\n"+(upload_title / 8.0).toFixed(2)+" MB/s\n"+((upload_title / 8.0)*1000.0).toFixed(0)+" KB/s";
 			break;
 
 		case 1: // Mega Bytes per second
-			upload_recommended /= 1000000;
+			upload_recommended /= 1000000.0;
 
-			maxplayers_recommended *= 1000000; // Upload MB/s to B/s
+			upload_recommended_title = "equally\n"+(upload_recommended*8.0).toFixed(2)+" Mbps\n"+(upload_recommended*8.0*1000.0).toFixed(0)+" Kbps";
+
+			maxplayers_recommended *= 1000000.0; // Upload MB/s to B/s
+			upload_title = "equally\n"+(upload_title * 8.0).toFixed(2)+" Mbps\n"+((upload_title * 8.0)*1000).toFixed(0)+" Kbps";
 			break;
 
 		case 2: // Kilo bits per second
-			upload_recommended /= 1000;
-			upload_recommended *= 8;
+			upload_recommended /= 1000.0;
+			upload_recommended *= 8.0;
 
-			maxplayers_recommended *= 1000 / 8; // Upload Kbps to B/s
+			maxplayers_recommended *= 1000.0 / 8.0; // Upload Kbps to B/s
+			upload_title = "equally\n"+(upload_title / 8.0).toFixed(0)+" KB/s\n"+((upload_title / 8.0)/1000).toFixed(2)+" MB/s";
 			break;
 
 		case 3: // Kilo Bytes per second
-			upload_recommended /= 1000;
+			upload_recommended /= 1000.0;
 
-			maxplayers_recommended *= 1000; // Upload KB/s to B/s
+			maxplayers_recommended *= 1000.0; // Upload KB/s to B/s
+			upload_title = "equally\n"+(upload_title * 8.0).toFixed(0)+" Kbps\n"+((upload_title * 8.0)/1000).toFixed(2)+" Mbps";
 			break;
 	}
 
+	elemt_upload.title = upload_title;
 	upload_recommended = upload_recommended.toFixed(2)+" "+units[unit_index];
 	maxplayers_recommended /= rate; // Divide upload with rate
+
+	if( 1048576 < rate )
+	{
+		rate = 1048576;
+	}
 
 	document.getElementById("output_minrate").innerHTML = rate;
 	document.getElementById("output_maxupdaterate").innerHTML = updaterate;
 	document.getElementById("output_maxplayers").innerHTML = maxplayers;
 	document.getElementById("output_upload_recommended").innerHTML = upload_recommended;
+	document.getElementById("output_upload_recommended").title = upload_recommended_title;
 	document.getElementById("output_maxplayers_recommended").innerHTML = parseFloat(maxplayers_recommended).toFixed(0);
 }
 </script>
