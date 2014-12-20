@@ -17,13 +17,25 @@ body {
 	background: linear-gradient(#3A3837, #000000); /* Standard syntax */
 	margin: 1px 1px 1px 1px;
 }
-div#center2 {
-	margin: 0px 0px 80px 50px;
-}
 div#header {
 	background-repeat: repeat-x;
 	height: 60px;
 	background-image: url(globalheader_bg.jpg);
+
+}
+div#header p {
+    position: absolute;
+	color: grey;
+	text-shadow: 1px 2px 0px black;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+	font-size: 20px;
+	left: 20px;
+}
+
+div#center2 {
+	margin: 0px 0px 80px 50px;
 }
 input,select {
 	width: 70px;
@@ -99,28 +111,29 @@ input#input_updaterate {
 	display:none;
     position: absolute;
     top: 50px;
+	border: 5px solid red;
 }
 
 </style>
 </head>
 
 <body onload="PageOnLoad()">
-<div id="header">asdasdasd</div>
+<div id="header"><p>Source Dedicated Server Rate Calculator 2015</p></div>
 
 	<div id="center2">
 	<div id="settings">
 server upload bandwidth	<input type="text" id="input_upload" value="10" title="Please use calculate and look again." oninput="UpdatedCheck()" > <select id="input_unit" onchange="UpdateUnitDefinition(this)">
 		<option>error!</option>
 	</select> <span id="output_unit_definition">error!</span>
--maxplayers			<input type="number" id="input_maxplayers" min="1" max="65" value="32" title="maxplayers" oninput="UpdatedCheck()" >
+-maxplayers			<input type="number" id="input_maxplayers" min="1" max="65" value="32" title="min. 1 max. 65" oninput="UpdatedCheck()" >
 <button id="button" onclick="UpdatedCheck()"> calculate </button></div>
 
 	<div id="net_graph">
-		<img id="popup" src="packetsize.png" border="5">
+		<img id="popup" src="packetsize.png" >
 		<input type="number" id="input_packetsize" min="1" max="9999" value="800" oninput="UpdatedCheck()" onmouseover="ImgOn()" onmouseout="ImgOff()" title="Packet size in bytes">
 		<input type="text" id="output_kilobytes" readonly title="Kilo Bytes per second">
 		<input type="text" id="output_lerp" readonly title="Please use calculate and look again.">
-		<input type="number" id="input_updaterate" min="20" max="128" value="66" title="updaterate" oninput="UpdatedCheck()" >
+		<input type="number" id="input_updaterate" min="20" max="128" value="66" title="updaterate min. 20 max. 128" oninput="UpdatedCheck()" >
 	</div>
 
 <div id="center">
@@ -269,20 +282,26 @@ function myFunctionCalculate() {
 	elemt_lerp.value = (lerp * 1000.0).toFixed(1);
 
 	var upload_recommended = rate * maxplayers;
+	var upload_recommended_title;
 	var maxplayers_recommended = parseFloat(elemt_upload.value);
 	var upload_title = maxplayers_recommended;
 
 	switch (unit_index) {
 		case 0: // Mega bits per second
 			upload_recommended /= 1000000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended).toFixed(2)+" MB/s\n"+(upload_recommended*1000).toFixed(0)+" KB/s";
+
 			upload_recommended *= 8.0;
 
 			maxplayers_recommended *= 1000000.0 / 8.0; // Upload Mbps to B/s
-			upload_title = "equally\n"+(upload_title / 8.0).toFixed(2)+" MB/s\n"+((upload_title / 8.0)*1000).toFixed(0)+" KB/s";
+			upload_title = "equally\n"+(upload_title / 8.0).toFixed(2)+" MB/s\n"+((upload_title / 8.0)*1000.0).toFixed(0)+" KB/s";
 			break;
 
 		case 1: // Mega Bytes per second
 			upload_recommended /= 1000000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended*8.0).toFixed(2)+" Mbps\n"+(upload_recommended*8.0*1000.0).toFixed(0)+" Kbps";
 
 			maxplayers_recommended *= 1000000.0; // Upload MB/s to B/s
 			upload_title = "equally\n"+(upload_title * 8.0).toFixed(2)+" Mbps\n"+((upload_title * 8.0)*1000).toFixed(0)+" Kbps";
@@ -317,6 +336,7 @@ function myFunctionCalculate() {
 	document.getElementById("output_maxupdaterate").innerHTML = updaterate;
 	document.getElementById("output_maxplayers").innerHTML = maxplayers;
 	document.getElementById("output_upload_recommended").innerHTML = upload_recommended;
+	document.getElementById("output_upload_recommended").title = upload_recommended_title;
 	document.getElementById("output_maxplayers_recommended").innerHTML = parseFloat(maxplayers_recommended).toFixed(0);
 }
 </script>
