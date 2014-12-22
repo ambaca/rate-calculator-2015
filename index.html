@@ -114,13 +114,21 @@ input#input_updaterate {
     top: 50px;
 	border: 5px solid red;
 }
-
+a:link, a:visited  {
+    color: lime;
+}
+a:hover  {
+    color: white;
+}
+a:active  {
+    color: red;
+}
 </style>
 </head>
 
 <body onload="PageOnLoad()">
 <div id="header"><p>Source Dedicated Server Rate Calculator 2015</p>v1.1</div>
-
+<a href="http://youtu.be/aDAQsc27Al8">Poor video for now...</a>
 	<div id="center2">
 	<div id="settings">
 server upload bandwidth	<input type="text" id="input_upload" value="10" title="Please use calculate and look again." oninput="UpdatedCheck()" > <select id="input_unit" onchange="UpdateUnitDefinition(this)">
