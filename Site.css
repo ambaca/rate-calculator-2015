@@ -1,0 +1,160 @@
+body {
+	font-family: Arial;
+	font-size: 0.8em;
+	color: grey;
+	background: linear-gradient(#3A3837, #000000) fixed; /* Standard syntax */
+	margin: 1px 1px 1px 1px;
+}
+
+#header {
+	background-repeat: repeat-x;
+	height: 60px;
+	background-image: url(globalheader_bg.jpg);
+	color: grey;
+	text-shadow: 1px 2px 0px black;
+	font-size: 20px;
+	white-space: nowrap;
+}
+
+#settings {
+    display: flex;
+	white-space: nowrap;
+}
+
+#server_settings, #client_settings {
+    padding: 5px;
+	border: 2px ridge grey;
+	margin: 5px;
+	text-align: left;
+}
+input#sv_maxrate,
+input#sv_minrate,
+input#cl_updaterate_show,
+input#cl_cmdrate_show,
+input#rate,
+input#packetsize,
+input#updaterate,
+input#cmdrate,
+input#kilobytes,
+input#lerp
+{
+	width: 70px;
+	text-align: right;
+	padding: 2px;
+	border: 0px none;
+	margin: 0px;
+}
+
+input#sv_maxupdaterate,
+input#sv_minupdaterate,
+input#sv_maxcmdrate,
+input#sv_mincmdrate,
+input#sv_client_cmdrate_difference,
+input#cl_updaterate,
+input#cl_cmdrate,
+input#cl_interp,
+input#cl_interp_ratio
+{
+	width: 40px;
+	text-align: right;
+	padding: 2px;
+	border: 0px none;
+	margin: 0px;
+}
+
+#net_graph {
+    padding: 5px;
+	border: 2px ridge grey;
+	margin: 5px;
+	position: relative;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-image: url(background1.png);
+	background-origin: content-box;
+	width: 683px; height: 480px;
+}
+
+input#cl_updaterate_show,
+input#cl_cmdrate_show,
+input#updaterate,
+input#cmdrate,
+input#packetsize,
+input#kilobytes,
+input#lerp
+{
+	padding: 0px;
+	border: 0px none;
+	margin: 0px;
+	font-family: Verdana;
+	font-size: 18px;
+    position: absolute;
+	background-image: url(background1.png);
+	background-position: 30% 20%;
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+input#packetsize {
+	outline: white inset thin;
+    top: 380px;
+    left: 175px;
+}
+input#kilobytes {
+    top: 380px;
+    left: 260px;
+}
+input#lerp {
+    top: 380px;
+    left: 460px;
+}
+input#cl_updaterate_show {
+    top: 357px;
+    left: 590px;
+}
+input#updaterate {
+    top: 380px;
+    left: 590px;
+}
+input#cmdrate {
+    top: 405px;
+    left: 590px;
+}
+input#cl_cmdrate_show {
+    top: 427px;
+    left: 590px;
+}
+#console_border {
+	padding: 5px 5px;
+	position: relative;
+	background-color:grey; 
+	min-width: 300px;
+	max-height:200px;
+	resize: both;
+	overflow: auto;
+}
+#console_content {
+	position: absolute;
+	background-color:white; 
+	overflow: hidden;
+	top: 30px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	background: rgba(0, 0, 0, 0.6);
+}
+#loading_text {
+	display: none;
+}
+
+#wrapper {
+	height: 500px;
+	width: 500px;
+	//margin: 0 auto;
+}
+
+input#vertical {
+ -webkit-appearance: slider-vertical;  writing-mode: bt-lr;
+}
