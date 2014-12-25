@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <!--
 
@@ -16,39 +16,65 @@
 </head>
 
 <body onload="PageOnLoad()">
+
 	<div id="header">
 		Source Dedicated Server Rate Calculator 2015
 	</div>
-<span id="loading_text">Please wait... LOADING page</span>
-	<div id="settings">
-		<table id="server_settings">
-			<tr><th align="right">Server settings</th></tr>
-			<tr><th>sv_maxrate</th>							<th align="right"><input type="number" id="sv_maxrate" ></th></tr>
-			<tr><th>sv_maxupdaterate</th>					<th align="right"><input type="number" id="sv_maxupdaterate"></th></tr>
-			<tr><th>sv_maxcmdrate</th>						<th align="right"><input type="number" id="sv_maxcmdrate"></th></tr>
-			<tr><th>sv_minrate</th>							<th align="right"><input type="number" id="sv_minrate"></th></tr>
-			<tr><th>sv_minupdaterate</th>					<th align="right"><input type="number" id="sv_minupdaterate"></th></tr>
-			<tr><th>sv_mincmdrate</th>						<th align="right"><input type="number" id="sv_mincmdrate"></th></tr>
-			<tr><th>sv_client_cmdrate_difference</th>		<th align="right"><input type="number" id="sv_client_cmdrate_difference"></th></tr>
+
+	<span id="loading_text">Waiting for the javascript function.<img src="loading.gif"></span>
+
+	<button onclick="functiontest()">test<img src="unlock-lock.png"></button>
+
+	<div id="screen">
+
+		<div id="server_tickrate">Server -tickrate <input type="text" id="tickrate" value="66" onchange="CheckServerTickrate()"></div>
+
+		<div id="settings">
+
+			<table id="server_settings">
+				<tr><th align="right">Server settings</th><th><button onclick="SetDefaultServerSettings()">Defaults</button></th></tr>
+				<tr><th>sv_maxrate</th>							<th align="right"><input type="text" id="sv_maxrate"></th></tr>
+				<tr><th>sv_maxupdaterate</th>					<th align="right"><input type="text" id="sv_maxupdaterate"></th></tr>
+				<tr><th>sv_maxcmdrate</th>						<th align="right"><input type="text" id="sv_maxcmdrate"></th></tr>
+				<tr><th><hr></th><th><hr></th></tr>
+				<tr><th>sv_minrate</th>							<th align="right"><input type="text" id="sv_minrate"></th></tr>
+				<tr><th>sv_minupdaterate</th>					<th align="right"><input type="text" id="sv_minupdaterate"></th></tr>
+				<tr><th>sv_mincmdrate</th>						<th align="right"><input type="text" id="sv_mincmdrate"></th></tr>
+				<tr><th>sv_client_cmdrate_difference</th>		<th align="right"><input type="text" id="sv_client_cmdrate_difference"></th></tr>
+			</table>
+
+			<table id="client_settings">
+				<tr><th align="right">Client settings</th><th><button onclick="SetDefaultClientSettings()">Defaults</button></th></tr>
+				<tr><th>rate</th>								<th align="right"><input type="number" id="rate" 			oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>cl_updaterate</th>						<th align="right"><input type="number" id="cl_updaterate"	oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>cl_cmdrate</th>							<th align="right"><input type="number" id="cl_cmdrate"		oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>cl_interp</th>							<th align="right"><input type="text"   id="cl_interp"		oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>cl_interp_ratio</th>					<th align="right"><input type="text"   id="cl_interp_ratio"	oninput="ClientSettingsChange()"></th></tr>
+			</table>
+
+		</div>
+
+		<div id="net_graph">
+
+			<input type="number"	id="player_fps"  value="8888" min="1" oninput="ClientSettingsChange()">
+			<input type="number"	id="server_fps"  value="8888" min="1" oninput="ClientSettingsChange()">
+			<input type="text"		id="packetsize"  value="8888" onchange="PacketSizeChange()">
+			<input type="text"		id="kilobytes"  value="8888" readonly>
+			<table><tr id="lerp_screen"><th>lerp : </th><th id="lerp">8888</th><th>ms</th></tr></table><!-- input type="text"		id="lerp"  value="" readonly -->
+			<input type="text"		id="cl_updaterate_show" value="888" readonly>
+			<input type="text"		id="updaterate" value="888" readonly>
+			<input type="text"		id="cmdrate" value="888" readonly>
+			<input type="text"		id="cl_cmdrate_show" value="888" readonly>
+
+		</div>
+
+		<table id="server_upload_tickrate">
+			<tr><th>Server upload bandwidth</th>	<th><input type="text" id="upload" ><select id="input_unit" onchange="UpdateUnitDefinition(this)">
+			<option>error!</option></select></th></tr>
+			<tr><th>Server -maxplayers</th>			<th><input type="number" id="maxplayers"></th></tr>
 		</table>
-		<table id="client_settings">
-			<tr><th align="right">Client settings</th></tr>
-			<tr><th>rate</th>								<th align="right"><input type="number" id="rate"></th></tr>
-			<tr><th>cl_updaterate</th>						<th align="right"><input type="number" id="cl_updaterate"></th></tr>
-			<tr><th>cl_cmdrate</th>							<th align="right"><input type="number" id="cl_cmdrate"></th></tr>
-			<tr><th>cl_interp</th>							<th align="right"><input type="text"   id="cl_interp"></th></tr>
-			<tr><th>cl_interp_ratio</th>					<th align="right"><input type="text"   id="cl_interp_ratio"></th></tr>
-		</table>
+
 	</div>
 
-	<div id="net_graph">
-		<input type="text"		id="packetsize"  value="8888" >
-		<input type="text"		id="kilobytes"  value="8888" readonly>
-		<input type="text"		id="lerp"  value="8888" readonly>
-		<input type="text"		id="cl_updaterate_show" value="888" readonly>
-		<input type="text"		id="updaterate" value="888" readonly>
-		<input type="text"		id="cmdrate" value="888" readonly>
-		<input type="text"		id="cl_cmdrate_show" value="888" readonly>
-	</div>
 </body>
 </html>

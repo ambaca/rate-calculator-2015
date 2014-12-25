@@ -1,4 +1,4 @@
-body {
+﻿body {
 	font-family: Arial;
 	font-size: 0.8em;
 	color: grey;
@@ -21,30 +21,17 @@ body {
 	white-space: nowrap;
 }
 
-#server_settings, #client_settings {
+#server_tickrate {
+    display: inline-block;
+}
+#server_settings, #client_settings, #server_tickrate , #net_graph{
     padding: 5px;
 	border: 2px ridge grey;
+    border-radius: 10px;
 	margin: 5px;
 	text-align: left;
 }
-input#sv_maxrate,
-input#sv_minrate,
-input#cl_updaterate_show,
-input#cl_cmdrate_show,
-input#rate,
-input#packetsize,
-input#updaterate,
-input#cmdrate,
-input#kilobytes,
-input#lerp
-{
-	width: 70px;
-	text-align: right;
-	padding: 2px;
-	border: 0px none;
-	margin: 0px;
-}
-
+input#tickrate,
 input#sv_maxupdaterate,
 input#sv_minupdaterate,
 input#sv_maxcmdrate,
@@ -53,19 +40,28 @@ input#sv_client_cmdrate_difference,
 input#cl_updaterate,
 input#cl_cmdrate,
 input#cl_interp,
-input#cl_interp_ratio
+input#cl_interp_ratio,
+input#sv_maxrate,
+input#sv_minrate,
+input#rate
 {
 	width: 40px;
 	text-align: right;
 	padding: 2px;
 	border: 0px none;
 	margin: 0px;
+	color: white;
+	background: rgba(255, 255, 255, 0.1);
 }
-
+input#tickrate,
+input#sv_maxrate,
+input#sv_minrate,
+input#rate
+{
+	color: white;
+	width: 70px;
+}
 #net_graph {
-    padding: 5px;
-	border: 2px ridge grey;
-	margin: 5px;
 	position: relative;
 	background-repeat: no-repeat;
 	background-attachment: scroll;
@@ -74,14 +70,18 @@ input#cl_interp_ratio
 	width: 683px; height: 480px;
 }
 
+input#player_fps,
+input#server_fps,
 input#cl_updaterate_show,
 input#cl_cmdrate_show,
 input#updaterate,
 input#cmdrate,
 input#packetsize,
 input#kilobytes,
-input#lerp
+#lerp_screen
 {
+	text-align: right;
+	width: 70px;
 	padding: 0px;
 	border: 0px none;
 	margin: 0px;
@@ -97,6 +97,16 @@ input#lerp
     -1px 1px 0 #000,
     1px 1px 0 #000;
 }
+input#player_fps {
+	outline: white inset thin;
+    top: 358px;
+    left: 175px;
+}
+input#server_fps {
+	outline: white inset thin;
+    top: 450px;
+    left: 200px;
+}
 input#packetsize {
 	outline: white inset thin;
     top: 380px;
@@ -106,9 +116,13 @@ input#kilobytes {
     top: 380px;
     left: 260px;
 }
-input#lerp {
+#lerp_screen {
+	font-family: Courier;
+	font-size: 20px;
+	text-align: left;
+	width: 190px;
     top: 380px;
-    left: 460px;
+    left: 385px;
 }
 input#cl_updaterate_show {
     top: 357px;
@@ -146,15 +160,5 @@ input#cl_cmdrate_show {
 	background: rgba(0, 0, 0, 0.6);
 }
 #loading_text {
-	display: none;
-}
-
-#wrapper {
-	height: 500px;
-	width: 500px;
-	//margin: 0 auto;
-}
-
-input#vertical {
- -webkit-appearance: slider-vertical;  writing-mode: bt-lr;
+	visibility:hidden;
 }
