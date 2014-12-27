@@ -24,7 +24,7 @@
 #server_tickrate {
     display: inline-block;
 }
-#server_settings, #client_settings, #server_tickrate , #net_graph{
+#server_settings, #client_settings, #server_tickrate , #net_graph, #convars{
     padding: 5px;
 	border: 2px ridge grey;
     border-radius: 10px;
@@ -89,7 +89,7 @@ input#kilobytes,
 	font-size: 18px;
     position: absolute;
 	background-image: url(background1.png);
-	background-position: 30% 20%;
+	background-position: 0% 0%;
     color: white;
     text-shadow:
     -1px -1px 0 #000,
@@ -161,4 +161,8 @@ input#cl_cmdrate_show {
 }
 #loading_text {
 	visibility:hidden;
+}
+#convars {
+	//white-space: nowrap;
+	display: inline-block;
 }

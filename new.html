@@ -44,12 +44,12 @@
 			</table>
 
 			<table id="client_settings">
-				<tr><th align="right">Client settings</th><th><button onclick="SetDefaultClientSettings()">Defaults</button></th></tr>
+				<tr><th align="right">Client settings</th><th><button onclick="SetDefaultClientSettingsButton()">Defaults</button></th></tr>
 				<tr><th>rate</th>								<th align="right"><input type="number" id="rate" 			oninput="ClientSettingsChange()"></th></tr>
 				<tr><th>cl_updaterate</th>						<th align="right"><input type="number" id="cl_updaterate"	oninput="ClientSettingsChange()"></th></tr>
 				<tr><th>cl_cmdrate</th>							<th align="right"><input type="number" id="cl_cmdrate"		oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>cl_interp</th>							<th align="right"><input type="text"   id="cl_interp"		oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>cl_interp_ratio</th>					<th align="right"><input type="text"   id="cl_interp_ratio"	oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>cl_interp</th>							<th align="right"><input type="text"   id="cl_interp"		onchange="ClientSettingsChange()"></th></tr>
+				<tr><th>cl_interp_ratio</th>					<th align="right"><input type="text"   id="cl_interp_ratio"	onchange="ClientSettingsChange()"></th></tr>
 			</table>
 
 		</div>
@@ -68,11 +68,23 @@
 
 		</div>
 
-		<table id="server_upload_tickrate">
-			<tr><th>Server upload bandwidth</th>	<th><input type="text" id="upload" ><select id="input_unit" onchange="UpdateUnitDefinition(this)">
-			<option>error!</option></select></th></tr>
-			<tr><th>Server -maxplayers</th>			<th><input type="number" id="maxplayers"></th></tr>
-		</table>
+		<div id="convars">
+			<table id="server_upload_maxplayers">
+				<tr><th align="right" style="color:lime">// Recommended Server Settings</th></tr>
+				<tr><th>sv_maxrate</th>							<th align="right" id="output_sv_maxrate">""</th></tr>
+				<tr><th>sv_maxupdaterate</th>					<th align="right" id="output_sv_maxupdaterate">""</th></tr>
+				<tr><th>sv_maxcmdrate</th>						<th align="right" id="output_sv_maxcmdrate">""</th></tr>
+				<tr><th>sv_minrate</th>							<th align="right" id="output_sv_minrate">""</th></tr>
+				<tr><th>sv_minupdaterate</th>					<th align="right" id="output_sv_minupdaterate">""</th></tr>
+				<tr><th>sv_mincmdrate</th>						<th align="right" id="output_sv_mincmdrate">""</th></tr>
+				<tr><th>sv_client_cmdrate_difference</th>		<th align="right" id="output_sv_client_cmdrate_difference">""</th></tr>
+			</table>
+		</div>
+			<table id="server_upload_maxplayers">
+				<tr><th>Server upload bandwidth</th>	<th><input type="text" id="upload" ><select id="input_unit" onchange="UpdateUnitDefinition(this)">
+				<option>error!</option></select></th></tr>
+				<tr><th>Server -maxplayers</th>			<th><input type="number" id="maxplayers"></th></tr>
+			</table>
 
 	</div>
 

@@ -29,7 +29,8 @@ var client_real_settings = {
 	rate: 30000,
 	updaterate: 20,
 	cmdrate: 30,
-	interp: 0.1
+	interp: 0.1,
+	cl_interp_ratio: 2.0
 }
 
 function PageOnLoad()
@@ -38,6 +39,13 @@ function PageOnLoad()
 	SetDefaultServerSettings();
 	SetDefaultClientSettings();
 	CheckServerTickrate();
+}
+
+function SetDefaultClientSettingsButton()
+{
+
+	SetDefaultClientSettings();
+	ClientSettingsChange();
 }
 
 function CheckServerTickrate()
@@ -85,6 +93,19 @@ function ClientSettingsChange()
 	var cl_cmdrate = parseInt(document.getElementById("cl_cmdrate").value) || 0;
 	var cl_interp = parseFloat(document.getElementById("cl_interp").value) || 0.0;
 	var cl_interp_ratio = parseFloat(document.getElementById("cl_interp_ratio").value) || 0.0;
+
+	if(cl_interp < 0.0 || cl_interp > 0.5)
+	{
+		cl_interp = cl_interp < 0.0 ? 0.0 : 0.5;
+		document.getElementById("cl_interp").value = cl_interp.toFixed(2);
+	}
+	//sv_client_min_interp_ratio 1;sv_client_max_interp_ratio 5
+	if(cl_interp_ratio < 1.0 || cl_interp_ratio > 5.0)
+	{
+		cl_interp_ratio = cl_interp_ratio < 1.0 ? 1.0 : 5.0;
+		document.getElementById("cl_interp_ratio").value = cl_interp_ratio.toFixed(2);
+	}
+	client_real_settings.cl_interp_ratio = cl_interp_ratio;
 
 	// pick server settings
 	var sv_maxrate = parseInt(document.getElementById("sv_maxrate").value) || 0;
@@ -178,14 +199,26 @@ function ClientSettingsChange()
 		document.getElementById("player_fps").value = fps_min;
 	}
 
+	// low tickrate
+	var tickrate = parseInt(document.getElementById("tickrate").value) || 0;
+	if(cmdrate > tickrate)
+	{
+		cmdrate = tickrate;
+	}
+
+	if(updaterate > tickrate)
+	{
+		updaterate = tickrate;
+	}
+
 	client_real_settings.rate = rate;
 	client_real_settings.updaterate = updaterate;
 	client_real_settings.cmdrate = cmdrate;
 
-	// interpolation //what the duck ??
+	// interpolation
 	// 0.1 s = 2 x ( 1.0f / cl_updaterate default of 20 ) )
-	client_real_settings.interp = Math.min( Math.max( cl_interp, cl_interp_ratio / parseFloat(cl_updaterate) ), 0.25 );
-	client_real_settings.interp = Math.max( client_real_settings.interp, cl_interp_ratio / parseFloat(cl_updaterate) );
+	client_real_settings.interp = Math.max( cl_interp, cl_interp_ratio / parseFloat(cl_updaterate) );
+	client_real_settings.interp = Math.max( client_real_settings.interp, 1.0 / parseFloat(cl_updaterate) );
 
 	UpdateNetGraph();
 
@@ -204,16 +237,18 @@ function UpdateNetGraph()
 
 	document.getElementById("lerp_screen").style.color = "white";
 
-	// what the duck ??
-	if(client_real_settings.interp < 1.0 / parseFloat(document.getElementById("cl_updaterate").value))
+	// lerp colors
+	if(client_real_settings.cl_interp_ratio / parseFloat(document.getElementById("cl_updaterate").value) < 2.0 / parseFloat(document.getElementById("cl_updaterate").value))
 	{
 		document.getElementById("lerp_screen").style.color = "orange";
 	}
 
-	if(client_real_settings.interp < 1.0 / parseFloat(document.getElementById("server_fps").value))
+	if(1.0 / parseFloat(document.getElementById("server_fps").value) > client_real_settings.interp )
 	{
 		document.getElementById("lerp_screen").style.color = "yellow";
 	}
+
+	RecommendedSettings();
 }
 
 function PacketSizeChange()
@@ -230,9 +265,21 @@ function PacketSizeChange()
 		packetsize = 9999;
 	}
 
-	document.getElementById("rate").value = packetsize * document.getElementById("cl_updaterate").value;
+	//document.getElementById("rate").value = packetsize * document.getElementById("cl_updaterate").value;
+	document.getElementById("rate").value = packetsize * client_real_settings.updaterate;
 
 	ClientSettingsChange();
+}
+
+function RecommendedSettings()
+{
+	document.getElementById("output_sv_maxrate").innerHTML = '\"'+0+'\"';
+	document.getElementById("output_sv_maxupdaterate").innerHTML = '\"'+client_real_settings.updaterate +'\"';
+	document.getElementById("output_sv_maxcmdrate").innerHTML = '\"'+client_real_settings.cmdrate+'\"';
+	document.getElementById("output_sv_minrate").innerHTML = '\"'+client_real_settings.rate+'\"';
+	document.getElementById("output_sv_minupdaterate").innerHTML = '\"'+20+'\"';
+	document.getElementById("output_sv_mincmdrate").innerHTML = '\"'+30+'\"';
+	document.getElementById("output_sv_client_cmdrate_difference").innerHTML = '\"'+20+'\"';
 }
 
 function functiontest()
