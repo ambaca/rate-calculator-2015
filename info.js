@@ -39,6 +39,7 @@ function PageOnLoad()
 	SetDefaultServerSettings();
 	SetDefaultClientSettings();
 	CheckServerTickrate();
+	document.getElementById("loading_text").style.display="none";
 }
 
 function SetDefaultClientSettingsButton()
@@ -248,6 +249,7 @@ function UpdateNetGraph()
 		document.getElementById("lerp_screen").style.color = "yellow";
 	}
 
+	document.getElementById("lerp_screen").title = "Ideal\ncl_interp_ratio 2.0; cl_interp "+ (2.0 / parseFloat(client_real_settings.updaterate)).toFixed(4);
 	RecommendedSettings();
 }
 
@@ -280,6 +282,16 @@ function RecommendedSettings()
 	document.getElementById("output_sv_minupdaterate").innerHTML = '\"'+20+'\"';
 	document.getElementById("output_sv_mincmdrate").innerHTML = '\"'+30+'\"';
 	document.getElementById("output_sv_client_cmdrate_difference").innerHTML = '\"'+20+'\"';
+}
+
+function ImgOn() {
+    document.getElementById("popup").style.display = "block";
+	
+}
+
+function ImgOff() {
+    document.getElementById("popup").style.display = "none";
+	
 }
 
 function functiontest()

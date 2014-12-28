@@ -140,6 +140,16 @@ input#cl_cmdrate_show {
     top: 427px;
     left: 590px;
 }
+#popup {
+	display:none;
+    position: absolute;
+    top: 50px;
+    padding: 5px;
+	border: 5px ridge red;
+    border-radius: 10px;
+	margin: 5px;
+	z-index: 4;
+}
 #console_border {
 	padding: 5px 5px;
 	position: relative;
@@ -160,7 +170,7 @@ input#cl_cmdrate_show {
 	background: rgba(0, 0, 0, 0.6);
 }
 #loading_text {
-	visibility:hidden;
+	//visibility:hidden;
 }
 #convars {
 	//white-space: nowrap;

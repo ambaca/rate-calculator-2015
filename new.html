@@ -23,8 +23,6 @@
 
 	<span id="loading_text">Waiting for the javascript function.<img src="loading.gif"></span>
 
-	<button onclick="functiontest()">test<img src="unlock-lock.png"></button>
-
 	<div id="screen">
 
 		<div id="server_tickrate">Server -tickrate <input type="text" id="tickrate" value="66" onchange="CheckServerTickrate()"></div>
@@ -55,10 +53,10 @@
 		</div>
 
 		<div id="net_graph">
-
+			<img id="popup" src="packetsize.png" >
 			<input type="number"	id="player_fps"  value="8888" min="1" oninput="ClientSettingsChange()">
 			<input type="number"	id="server_fps"  value="8888" min="1" oninput="ClientSettingsChange()">
-			<input type="text"		id="packetsize"  value="8888" onchange="PacketSizeChange()">
+			<input type="text"		id="packetsize"  value="8888" onchange="PacketSizeChange()" onmouseover="ImgOn()" onmouseout="ImgOff()">
 			<input type="text"		id="kilobytes"  value="8888" readonly>
 			<table><tr id="lerp_screen"><th>lerp : </th><th id="lerp">8888</th><th>ms</th></tr></table><!-- input type="text"		id="lerp"  value="" readonly -->
 			<input type="text"		id="cl_updaterate_show" value="888" readonly>
@@ -87,6 +85,6 @@
 			</table>
 
 	</div>
-
+	<button onclick="functiontest()">test<img src="unlock-lock.png"></button>
 </body>
 </html>
