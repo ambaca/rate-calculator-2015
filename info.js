@@ -35,10 +35,13 @@ var client_real_settings = {
 
 function PageOnLoad()
 {
+	UpdateUpload();
+
 	document.getElementById("player_fps").value = client_settings.player_fps;
 	SetDefaultServerSettings();
 	SetDefaultClientSettings();
 	CheckServerTickrate();
+	UpdateResults();
 	document.getElementById("loading_text").style.display="none";
 }
 
@@ -282,6 +285,8 @@ function RecommendedSettings()
 	document.getElementById("output_sv_minupdaterate").innerHTML = '\"'+20+'\"';
 	document.getElementById("output_sv_mincmdrate").innerHTML = '\"'+30+'\"';
 	document.getElementById("output_sv_client_cmdrate_difference").innerHTML = '\"'+20+'\"';
+
+	UpdateResults();
 }
 
 function ImgOn() {
@@ -294,6 +299,85 @@ function ImgOff() {
 	
 }
 
+function UpdateUpload()
+{
+	var index;
+	var text;
+
+	for (index = 0; index < units.length; index++) {
+		text += "<option>" + units[index] + "</option>";
+	}
+	document.getElementById("input_unit").innerHTML = text;
+	document.getElementById("output_unit_definition").innerHTML = units_definitions[0];
+}
+function UpdateUnitDefinition(element)
+{
+	document.getElementById("output_unit_definition").innerHTML = units_definitions[element.selectedIndex];
+	UpdateResults();
+}
+
+function UpdateResults()
+{
+
+	var unit_index = document.getElementById("input_unit").selectedIndex;
+	var elemt_upload = document.getElementById("upload");
+	var maxplayers = parseInt(document.getElementById("maxplayers").value) || 0;
+	var upload_recommended = client_real_settings.rate * maxplayers;
+
+	var upload_recommended_title;
+	var maxplayers_recommended = parseFloat(elemt_upload.value) || 0.0;
+	var upload_title = maxplayers_recommended;
+
+	switch (unit_index) {
+		case 0: // Mega bits per second
+			upload_recommended /= 1000000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended).toFixed(2)+" MB/s\n"+(upload_recommended*1000).toFixed(0)+" KB/s";
+
+			upload_recommended *= 8.0;
+
+			maxplayers_recommended *= 1000000.0 / 8.0; // Upload Mbps to B/s
+			upload_title = "equally\n"+(upload_title / 8.0).toFixed(2)+" MB/s\n"+((upload_title / 8.0)*1000.0).toFixed(0)+" KB/s";
+			break;
+
+		case 1: // Mega Bytes per second
+			upload_recommended /= 1000000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended*8.0).toFixed(2)+" Mbps\n"+(upload_recommended*8.0*1000.0).toFixed(0)+" Kbps";
+
+			maxplayers_recommended *= 1000000.0; // Upload MB/s to B/s
+			upload_title = "equally\n"+(upload_title * 8.0).toFixed(2)+" Mbps\n"+((upload_title * 8.0)*1000).toFixed(0)+" Kbps";
+			break;
+
+		case 2: // Kilo bits per second
+			upload_recommended /= 1000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended).toFixed(0)+" KB/s\n"+(upload_recommended/1000.0).toFixed(2)+" MB/s";
+
+			upload_recommended *= 8.0;
+
+			maxplayers_recommended *= 1000.0 / 8.0; // Upload Kbps to B/s
+			upload_title = "equally\n"+(upload_title / 8.0).toFixed(0)+" KB/s\n"+((upload_title / 8.0)/1000).toFixed(2)+" MB/s";
+			break;
+
+		case 3: // Kilo Bytes per second
+			upload_recommended /= 1000.0;
+
+			upload_recommended_title = "equally\n"+(upload_recommended*8.0).toFixed(0)+" Kbps\n"+(upload_recommended*8.0/1000.0).toFixed(2)+" Mbps";
+
+			maxplayers_recommended *= 1000.0; // Upload KB/s to B/s
+			upload_title = "equally\n"+(upload_title * 8.0).toFixed(0)+" Kbps\n"+((upload_title * 8.0)/1000).toFixed(2)+" Mbps";
+			break;
+	}
+
+	elemt_upload.title = upload_title;
+	upload_recommended = upload_recommended.toFixed(2)+" "+units[unit_index];
+	maxplayers_recommended /= client_real_settings.rate; // Divide upload with rate
+	document.getElementById("output_maxplayers").innerHTML = maxplayers;
+	document.getElementById("output_upload_recommended").innerHTML = upload_recommended;
+	document.getElementById("output_upload_recommended").title = upload_recommended_title;
+	document.getElementById("output_maxplayers_recommended").innerHTML = parseFloat(maxplayers_recommended).toFixed(0);
+}
 function functiontest()
 {
 	ClientSettingsChange();

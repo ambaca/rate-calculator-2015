@@ -21,16 +21,24 @@
 	white-space: nowrap;
 }
 
+#convars {
+    display: flex;
+	white-space: nowrap;
+	margin-bottom: 100px;
+}
+
 #server_tickrate {
     display: inline-block;
 }
-#server_settings, #client_settings, #server_tickrate , #net_graph, #convars{
+#server_settings, #client_settings, #server_tickrate , #net_graph, #server_upload_recommended, #server_upload_maxplayers{
     padding: 5px;
 	border: 2px ridge grey;
     border-radius: 10px;
 	margin: 5px;
 	text-align: left;
 }
+input#upload,
+input#maxplayers,
 input#tickrate,
 input#sv_maxupdaterate,
 input#sv_minupdaterate,
@@ -169,10 +177,6 @@ input#cl_cmdrate_show {
 	bottom: 10px;
 	background: rgba(0, 0, 0, 0.6);
 }
-#loading_text {
-	//visibility:hidden;
-}
-#convars {
-	//white-space: nowrap;
-	display: inline-block;
+input#maxplayers, input#upload {
+	text-align:left;
 }

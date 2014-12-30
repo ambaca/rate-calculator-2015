@@ -18,7 +18,7 @@
 <body onload="PageOnLoad()">
 
 	<div id="header">
-		Source Dedicated Server Rate Calculator 2015
+		Source Dedicated Server Rate Calculator 2015 <span style="font-size: 12px;">v1.2-30.12.2014</span>
 	</div>
 
 	<span id="loading_text">Waiting for the javascript function.<img src="loading.gif"></span>
@@ -31,14 +31,14 @@
 
 			<table id="server_settings">
 				<tr><th align="right">Server settings</th><th><button onclick="SetDefaultServerSettings()">Defaults</button></th></tr>
-				<tr><th>sv_maxrate</th>							<th align="right"><input type="text" id="sv_maxrate"></th></tr>
-				<tr><th>sv_maxupdaterate</th>					<th align="right"><input type="text" id="sv_maxupdaterate"></th></tr>
-				<tr><th>sv_maxcmdrate</th>						<th align="right"><input type="text" id="sv_maxcmdrate"></th></tr>
+				<tr><th>sv_maxrate</th>							<th align="right"><input type="text" id="sv_maxrate"			oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_maxupdaterate</th>					<th align="right"><input type="text" id="sv_maxupdaterate"		oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_maxcmdrate</th>						<th align="right"><input type="text" id="sv_maxcmdrate"			oninput="ClientSettingsChange()"></th></tr>
 				<tr><th><hr></th><th><hr></th></tr>
-				<tr><th>sv_minrate</th>							<th align="right"><input type="text" id="sv_minrate"></th></tr>
-				<tr><th>sv_minupdaterate</th>					<th align="right"><input type="text" id="sv_minupdaterate"></th></tr>
-				<tr><th>sv_mincmdrate</th>						<th align="right"><input type="text" id="sv_mincmdrate"></th></tr>
-				<tr><th>sv_client_cmdrate_difference</th>		<th align="right"><input type="text" id="sv_client_cmdrate_difference"></th></tr>
+				<tr><th>sv_minrate</th>							<th align="right"><input type="text" id="sv_minrate"			oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_minupdaterate</th>					<th align="right"><input type="text" id="sv_minupdaterate"		oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_mincmdrate</th>						<th align="right"><input type="text" id="sv_mincmdrate"			oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_client_cmdrate_difference</th>		<th align="right"><input type="text" id="sv_client_cmdrate_difference"	oninput="ClientSettingsChange()"></th></tr>
 			</table>
 
 			<table id="client_settings">
@@ -77,14 +77,18 @@
 				<tr><th>sv_mincmdrate</th>						<th align="right" id="output_sv_mincmdrate">""</th></tr>
 				<tr><th>sv_client_cmdrate_difference</th>		<th align="right" id="output_sv_client_cmdrate_difference">""</th></tr>
 			</table>
-		</div>
-			<table id="server_upload_maxplayers">
-				<tr><th>Server upload bandwidth</th>	<th><input type="text" id="upload" ><select id="input_unit" onchange="UpdateUnitDefinition(this)">
-				<option>error!</option></select></th></tr>
-				<tr><th>Server -maxplayers</th>			<th><input type="number" id="maxplayers"></th></tr>
+
+			<table id="server_upload_recommended">
+				<tr><th>Server upload bandwidth</th>	<th><input type="text" id="upload" value="8.00" oninput="UpdateResults()"><select id="input_unit" onchange="UpdateUnitDefinition(this)"> 
+				<option>error!</option></select></th><th><span id="output_unit_definition">error!</span></th></tr>
+				<tr><th>Server -maxplayers</th>			<th><input type="number" id="maxplayers" min="1" max="65" value="32" oninput="UpdateResults()"></th></tr>
+	<tr><th>You can host <span id="output_maxplayers_recommended">0</span> players</th></tr>
+	<tr><th>* Recommended Upload Bandwidth for <span id="output_maxplayers">0</span> players = <span id="output_upload_recommended">0</span></th></tr>
 			</table>
 
+		</div>
+
 	</div>
-	<button onclick="functiontest()">test<img src="unlock-lock.png"></button>
+	<!-- button onclick="functiontest()">test<img src="unlock-lock.png"></button -->
 </body>
 </html>
