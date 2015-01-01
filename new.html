@@ -18,27 +18,28 @@
 <body onload="PageOnLoad()">
 
 	<div id="header">
-		Source Dedicated Server Rate Calculator 2015 <span style="font-size: 12px;">v1.2-30.12.2014</span>
+		Source Dedicated Server Rate Calculator 2015 <span style="font-size: 12px;">v1.2-1.1.2015</span>
 	</div>
 
 	<span id="loading_text">Waiting for the javascript function.<img src="loading.gif"></span>
 
 	<div id="screen">
 
-		<div id="server_tickrate">Server -tickrate <input type="text" id="tickrate" value="66" onchange="CheckServerTickrate()"></div>
-
+		<div id="server_tickrate">Server -tickrate <input type="text" id="tickrate" value="66" onchange="CheckServerTickrate()"></div><br>
+Note!<br>
+Server Settings will take effect the next time when you change the Client Settings.
 		<div id="settings">
 
 			<table id="server_settings">
 				<tr><th align="right">Server settings</th><th><button onclick="SetDefaultServerSettings()">Defaults</button></th></tr>
-				<tr><th>sv_maxrate</th>							<th align="right"><input type="text" id="sv_maxrate"			oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>sv_maxupdaterate</th>					<th align="right"><input type="text" id="sv_maxupdaterate"		oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>sv_maxcmdrate</th>						<th align="right"><input type="text" id="sv_maxcmdrate"			oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_maxrate</th>							<th align="right"><input type="text" id="sv_maxrate"			></th></tr>
+				<tr><th>sv_maxupdaterate</th>					<th align="right"><input type="text" id="sv_maxupdaterate"		></th></tr>
+				<tr><th>sv_maxcmdrate</th>						<th align="right"><input type="text" id="sv_maxcmdrate"			></th></tr>
 				<tr><th><hr></th><th><hr></th></tr>
-				<tr><th>sv_minrate</th>							<th align="right"><input type="text" id="sv_minrate"			oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>sv_minupdaterate</th>					<th align="right"><input type="text" id="sv_minupdaterate"		oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>sv_mincmdrate</th>						<th align="right"><input type="text" id="sv_mincmdrate"			oninput="ClientSettingsChange()"></th></tr>
-				<tr><th>sv_client_cmdrate_difference</th>		<th align="right"><input type="text" id="sv_client_cmdrate_difference"	oninput="ClientSettingsChange()"></th></tr>
+				<tr><th>sv_minrate</th>							<th align="right"><input type="text" id="sv_minrate"			></th></tr>
+				<tr><th>sv_minupdaterate</th>					<th align="right"><input type="text" id="sv_minupdaterate"		></th></tr>
+				<tr><th>sv_mincmdrate</th>						<th align="right"><input type="text" id="sv_mincmdrate"			></th></tr>
+				<tr><th>sv_client_cmdrate_difference</th>		<th align="right"><input type="text" id="sv_client_cmdrate_difference"	></th></tr>
 			</table>
 
 			<table id="client_settings">
